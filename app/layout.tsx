@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
-import { Inter_Tight, Manrope } from "next/font/google";
+// Шрифты хранятся в проекте (fontsource), сборка не зависит от Google Fonts.
+import "@fontsource-variable/inter-tight";
+import "@fontsource-variable/manrope";
 import "./globals.css";
 import "@/styles/hero.css";
 import "@/styles/container.css";
@@ -15,18 +17,6 @@ import CalcModal from "@/components/CalcModal";
 import FontPreview from "@/components/FontPreview";
 import AwFlow from "@/components/AwFlow";
 
-const display = Inter_Tight({
-  variable: "--f-display",
-  subsets: ["latin", "cyrillic"],
-  weight: ["500", "600", "700", "800", "900"],
-});
-
-const body = Manrope({
-  variable: "--f-body",
-  subsets: ["latin", "cyrillic"],
-  weight: ["400", "500", "600", "700"],
-});
-
 export const metadata: Metadata = {
   title: "Flux Cargo — доставка грузов из Китая в Казахстан от 1 коробки",
   description:
@@ -37,7 +27,7 @@ export const viewport: Viewport = { themeColor: "#0f172a" };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ru" className={`${display.variable} ${body.variable}`} suppressHydrationWarning>
+    <html lang="ru" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
         {process.env.NODE_ENV === "development" && (
