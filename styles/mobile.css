@@ -1,0 +1,570 @@
+/* =====================================================================
+   Мобильная версия (≤ 760px).
+   Отдельная проработка каждого блока, а не сжатый десктоп.
+   Правило клиента: весь текст на мобилке — строго по центру.
+   ===================================================================== */
+@media (max-width: 760px) {
+  :root {
+    --gutter: 18px;
+    --radius: 20px;
+  }
+
+  /* ---------- общее ---------- */
+  main,
+  .ftr,
+  .modal__panel,
+  .mnav {
+    text-align: center;
+  }
+  .services,
+  .tariffs,
+  .calc,
+  .cats,
+  .faq,
+  .steps,
+  .about {
+    padding-block: 64px;
+  }
+  .btn--lg {
+    --bh: 56px;
+  }
+
+  /* заголовок секции: всё в столбик по центру */
+  .shead {
+    margin-bottom: 32px;
+  }
+  .shead__top {
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .shead__idx::before {
+    content: "· ";
+  }
+  .shead__row {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  .shead__title {
+    max-width: none;
+    font-size: clamp(38px, 11vw, 52px);
+    line-height: 0.98;
+    text-wrap: balance;
+  }
+  .shead__aside {
+    max-width: 34ch;
+    font-size: 15px;
+  }
+
+  /* ---------- шапка / меню ---------- */
+  .mnav nav {
+    align-items: center;
+  }
+  .mnav .btn {
+    align-self: stretch;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    padding-top: calc(var(--hdr-h) + 10px);
+    padding-bottom: 20px;
+  }
+  .hero__meta {
+    justify-content: center;
+  }
+  .hero__photo::after {
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.6) 0%, rgba(15, 23, 42, 0.45) 45%, rgba(15, 23, 42, 0.92) 100%);
+  }
+  .hero__brand-wrap {
+    display: flex;
+    justify-content: center;
+  }
+  .hero__grid {
+    margin-top: 28px;
+    gap: 8px;
+  }
+  .hero__text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .hero__h1 {
+    max-width: 18ch;
+    font-size: clamp(28px, 8.4vw, 36px);
+    text-wrap: balance;
+  }
+  .hero__verbs {
+    justify-content: center;
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    max-width: 360px;
+  }
+  .hero__verbs li {
+    justify-content: center;
+  }
+  .hero__lead {
+    margin-top: 18px;
+    max-width: 34ch;
+  }
+  .hero__ctas {
+    width: 100%;
+    max-width: 420px;
+    margin-top: 26px;
+    flex-direction: column;
+  }
+  .hero__ctas .btn,
+  .catpage__ctas .btn {
+    flex: none; /* иначе flex-basis:100% в колонке сплющивает кнопку по высоте */
+    width: 100%;
+  }
+  .hero__scene {
+    margin-top: 12px;
+  }
+  .hero__foot {
+    display: none;
+  }
+
+  /* ---------- контейнер ---------- */
+  .cx-hint,
+  .cx-close {
+    min-height: 48px;
+    font-size: 15px;
+    white-space: nowrap;
+  }
+  .cx-hint__more {
+    display: none;
+  }
+  .cx-tag {
+    font-size: 12px;
+    padding: 7px 10px 7px 7px;
+    border-radius: 12px;
+  }
+  .cx-tag span {
+    font-size: 11px;
+  }
+  .cx-tag i {
+    width: 22px;
+    height: 22px;
+  }
+  .cx-tag i::after {
+    left: 8px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+  }
+
+  /* ---------- метрики ---------- */
+  .metrics {
+    padding-block: 48px;
+  }
+  .metric,
+  .metric:first-child,
+  .metric:nth-child(3) {
+    padding: 24px 10px;
+    text-align: center;
+  }
+  .metric__num {
+    justify-content: center;
+    font-size: clamp(34px, 10.5vw, 48px);
+  }
+  .metric__label {
+    margin-top: 10px;
+    font-size: 13px;
+  }
+
+  /* ---------- как работаем ---------- */
+  .step {
+    align-items: center;
+    padding: 26px 22px;
+  }
+  .step__top {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .step__title {
+    margin-top: 18px;
+    font-size: 24px;
+  }
+  .step__text {
+    max-width: 32ch;
+  }
+  .step__result {
+    width: 100%;
+  }
+
+  /* ---------- способы доставки ---------- */
+  .srv__media {
+    aspect-ratio: 16 / 10;
+  }
+  .srv__time {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .srv__body {
+    align-items: center;
+    padding: 22px 20px 24px;
+  }
+  .srv__for {
+    justify-items: center;
+  }
+  .srv__link {
+    margin-top: 6px;
+  }
+
+  /* ---------- тарифы ---------- */
+  .tabs {
+    display: grid;
+    width: 100%;
+  }
+  .tcard {
+    align-items: center;
+    padding: 26px 22px;
+  }
+  .tcard__badge {
+    position: static !important;
+    margin-bottom: 14px;
+  }
+  .tcard__note {
+    min-height: 0;
+  }
+  .tcard__mid {
+    width: 100%;
+  }
+  .tcard__price {
+    justify-content: center;
+  }
+  .tcard__perks li {
+    justify-content: center;
+  }
+  .tariffs__foot {
+    max-width: 36ch;
+    margin-inline: auto;
+  }
+
+  /* ---------- калькулятор (и в поп-апе) ---------- */
+  .calc__fields,
+  .calc__res {
+    padding: 22px 18px;
+  }
+  .field > span,
+  .field legend,
+  .field__line > span {
+    width: 100%;
+    text-align: center;
+  }
+  .field select {
+    text-align: center;
+    text-align-last: center;
+  }
+  .chips {
+    justify-content: center;
+  }
+  .field__line {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .range__marks {
+    font-size: 11px;
+  }
+  .calc__route {
+    justify-content: center;
+  }
+  .calc__label {
+    margin-top: 18px;
+  }
+  .calc__total {
+    justify-content: center;
+  }
+  .calc__dl div {
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+  .calc__form input {
+    text-align: center;
+  }
+
+  /* ---------- маркетплейсы ---------- */
+  .mq__head {
+    justify-items: center;
+  }
+  .mq__title {
+    font-size: 26px;
+    text-wrap: balance;
+  }
+  .mq__grid {
+    gap: 10px;
+  }
+  .mq__card {
+    padding: 26px 12px 20px;
+  }
+  .mq__logo {
+    font-size: 26px;
+  }
+  .mq__note {
+    font-size: 12px;
+  }
+
+  /* ---------- что доставляем: 2 колонки, компактно ---------- */
+  .cats__grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px;
+  }
+  .cat__media {
+    aspect-ratio: 1;
+  }
+  .cat__body {
+    padding: 14px 10px 16px;
+  }
+  .cat__body h3 {
+    font-size: 17px;
+    margin-top: 4px;
+  }
+  .cat__body p {
+    font-size: 12px;
+  }
+  .cat__idx {
+    font-size: 11px;
+  }
+  .cat__go {
+    width: 36px;
+    height: 36px;
+    top: 10px;
+    right: 10px;
+  }
+
+  /* ---------- о нас ---------- */
+  .about__text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .about__lead {
+    font-size: 22px;
+  }
+  .about__body {
+    font-size: 16px;
+    max-width: 36ch;
+  }
+  .about__facts {
+    justify-content: center;
+    gap: 24px 28px;
+  }
+  .about__facts div {
+    justify-items: center;
+  }
+  .about__media {
+    min-height: 280px;
+  }
+  .princ__item {
+    padding: 24px 20px;
+  }
+
+  /* ---------- FAQ ---------- */
+  .faq__ask {
+    margin-inline: auto;
+  }
+  .faq__q {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+    font-size: 19px;
+    padding: 22px 0;
+  }
+  .faq__a p {
+    margin-inline: auto;
+  }
+
+  /* ---------- финальный CTA ---------- */
+  .cta__plate {
+    padding: 22px 18px 30px;
+    border-radius: 26px;
+  }
+  .cta__text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .cta__title {
+    font-size: clamp(32px, 9vw, 40px);
+    max-width: 14ch;
+  }
+  .cta__btns {
+    width: 100%;
+  }
+  .cta__btns .btn {
+    width: 100%;
+  }
+  .bx {
+    height: 270px;
+  }
+  .bx-stage {
+    transform: scale(0.82);
+  }
+
+  /* ---------- контакты ---------- */
+  .ccard {
+    align-items: center;
+    padding: 24px 20px;
+  }
+  .ccard__btn {
+    align-self: center;
+  }
+  .mapcard {
+    height: 420px;
+  }
+  .mapcard__info {
+    left: 12px;
+    right: 12px;
+    top: auto;
+    bottom: 12px;
+    max-width: none;
+    justify-items: center;
+    text-align: center;
+    padding: 16px;
+  }
+  .mapcard__shield {
+    place-items: start center;
+    padding: 16px 0 0;
+  }
+  .mapcard__shield span {
+    opacity: 1;
+  }
+
+  /* ---------- подвал ---------- */
+  .ftr__top {
+    flex-direction: column;
+    align-items: center;
+  }
+  .ftr__nav,
+  .ftr__contacts {
+    justify-content: center;
+  }
+  .ftr__contacts {
+    flex-direction: column;
+    align-items: center;
+    font-size: 18px;
+  }
+  .ftr__bottom {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* ---------- поп-апы: листом снизу ---------- */
+  .modal {
+    padding: 0;
+    place-items: end stretch;
+  }
+  .modal__panel {
+    width: 100%;
+    max-height: 92dvh;
+    border-radius: 24px 24px 0 0;
+    padding: 18px 14px 28px;
+    transform: translateY(100%);
+  }
+  .modal__head {
+    position: relative;
+    justify-content: center;
+    padding: 0 52px;
+    margin-bottom: 16px;
+  }
+  .modal__title {
+    font-size: 28px;
+  }
+  .modal__close {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    margin-top: -22px;
+    width: 44px;
+    height: 44px;
+  }
+  .smod__route {
+    justify-items: center;
+  }
+  .smod__cols li {
+    justify-content: center;
+  }
+  .smod__btn {
+    width: 100%;
+  }
+
+  /* ---------- страница категории ---------- */
+  .catpage__hero {
+    padding-bottom: 48px;
+  }
+  .catpage__bg::after {
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.92));
+  }
+  .crumbs {
+    justify-content: center;
+  }
+  .catpage__title {
+    max-width: none;
+    margin-inline: auto;
+    font-size: clamp(40px, 12vw, 56px);
+  }
+  .catpage__lead {
+    margin-inline: auto;
+    font-size: 16px;
+  }
+  .catpage__ctas {
+    flex-direction: column;
+  }
+  .catpage__ctas .btn {
+    width: 100%;
+  }
+  .catpage__list {
+    grid-template-columns: 1fr;
+  }
+  .catpage__list li {
+    justify-content: center;
+  }
+  .care {
+    display: grid;
+    justify-items: center;
+  }
+  .catpage__rec-price {
+    justify-items: center;
+  }
+  .catpage__rec-price .btn {
+    width: 100%;
+  }
+  .catpage__links {
+    grid-template-columns: 1fr;
+  }
+  .catlink {
+    text-align: left;
+  }
+
+  /* ---------- страница шрифтов ---------- */
+  .fcard__head {
+    justify-items: center;
+  }
+  .fcard__head .btn {
+    justify-self: center;
+  }
+  .fcard__hero {
+    font-size: 15vw;
+    padding: 14px;
+  }
+}
+
+@media (max-width: 380px) {
+  .hero__verbs li {
+    font-size: 14px;
+    padding: 7px 10px 7px 7px;
+  }
+}
+@media (max-width: 340px) {
+  .cats__grid {
+    grid-template-columns: 1fr !important;
+  }
+  .mq__grid {
+    grid-template-columns: 1fr;
+  }
+}

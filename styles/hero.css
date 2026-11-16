@@ -1,0 +1,204 @@
+/* ============ Герой ============ */
+.hero {
+  position: relative;
+  padding-top: calc(var(--hdr-h) + 18px);
+  padding-bottom: 28px;
+  overflow: hidden;
+  isolation: isolate;
+}
+/* фото на весь блок — сквозь буквы и под ними только корабль/порт */
+.hero__photo {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+.hero__photo img {
+  width: 100%;
+  height: 112%;
+  object-fit: cover;
+  object-position: center 62%;
+}
+.hero__photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(15, 23, 42, 0.55) 0%, rgba(15, 23, 42, 0.35) 40%, rgba(15, 23, 42, 0.8) 100%),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.7) 0%, rgba(15, 23, 42, 0.1) 65%);
+}
+
+.hero__meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 13px;
+  color: var(--muted);
+  padding-bottom: 8px;
+}
+.hero__meta span:first-child {
+  color: var(--text);
+  font-weight: 600;
+}
+.hero__brand {
+  white-space: nowrap;
+  width: max-content;
+  font-family: var(--f-display);
+  font-weight: 900;
+  font-size: 17vw; /* до подгонки JS */
+  line-height: 0.8;
+  letter-spacing: -0.06em;
+  color: #fff;
+  pointer-events: none;
+  user-select: none;
+}
+.hero__mask {
+  display: inline-block;
+  overflow: hidden;
+  padding-bottom: 0.05em;
+  margin-bottom: -0.05em;
+  vertical-align: top;
+}
+.hero__char {
+  display: inline-block;
+  will-change: transform;
+}
+.hero__mask:nth-child(n + 6) .hero__char {
+  color: var(--accent);
+}
+
+.hero__grid {
+  position: relative;
+  margin-top: clamp(28px, 4vw, 56px);
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: clamp(24px, 4vw, 64px);
+  align-items: center;
+}
+.hero__h1 {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: clamp(30px, 3.4vw, 54px);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  max-width: 15ch;
+}
+.hero__h1 em {
+  color: var(--accent);
+}
+.hero__verbs {
+  list-style: none;
+  padding: 0;
+  margin: 26px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.hero__verbs li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px 8px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--line-2);
+  background: var(--glass);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 1;
+}
+.hero__verbs li span {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 11px;
+}
+.hero__lead {
+  margin-top: 22px;
+  max-width: 44ch;
+  color: var(--soft);
+  font-size: 17px;
+}
+.hero__ctas {
+  margin-top: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.hero__ctas .btn--ghost {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.hero__scene {
+  position: relative;
+}
+.hero__foot {
+  position: relative;
+  margin-top: 28px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.hero__scroll {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text);
+}
+.hero__scroll i {
+  width: 1px;
+  height: 28px;
+  background: linear-gradient(var(--accent), transparent);
+  animation: scrollcue 1.8s var(--ease) infinite;
+  transform-origin: top;
+}
+@keyframes scrollcue {
+  0% {
+    transform: scaleY(0);
+  }
+  50% {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  51% {
+    transform-origin: bottom;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+}
+
+@media (max-width: 960px) {
+  .hero__grid {
+    grid-template-columns: 1fr;
+  }
+  .hero__meta-mid {
+    display: none;
+  }
+  .hero__scene {
+    margin-top: 8px;
+  }
+  .hero__foot span:last-child {
+    display: none;
+  }
+}
+@media (max-width: 560px) {
+  .hero__meta span:last-child {
+    display: none;
+  }
+  .hero__ctas .btn {
+    flex: 1 1 100%;
+  }
+  .hero__lead {
+    font-size: 16px;
+  }
+}
