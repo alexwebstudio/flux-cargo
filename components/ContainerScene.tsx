@@ -143,7 +143,8 @@ export default function ContainerScene() {
         gsap.from(q(".cx-hint"), { autoAlpha: 0, y: 10, duration: 0.8, delay: 1.4 });
       });
 
-      if (!reduced) {
+      const isPhone = window.matchMedia("(max-width: 760px)").matches;
+      if (!reduced && !isPhone) {
         idle.current = gsap
           .timeline({ paused: true, repeat: -1, yoyo: true, defaults: { ease: "sine.inOut", duration: 2.6 } })
           .to(q(".cx-float"), { y: -12 })

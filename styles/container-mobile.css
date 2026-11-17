@@ -1,0 +1,385 @@
+/* =====================================================================
+   Контейнер для телефонов (≤ 760px) — плоский, без вложенного 3D.
+   На десктопе показывается 3D-версия (.cx), на телефоне — эта (.cxm).
+   ===================================================================== */
+.cxm {
+  display: none;
+}
+@media (max-width: 760px) {
+  .cx {
+    display: none;
+  }
+  .cxm {
+    display: block;
+    --f: 13px; /* толщина рамы */
+  }
+}
+
+.cxm__body {
+  position: relative;
+  width: min(86%, 330px);
+  margin: 8px auto 0;
+}
+.cxm__shadow {
+  position: absolute;
+  left: 4%;
+  right: 4%;
+  bottom: -18px;
+  height: 36px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(0, 0, 0, 0.55), transparent);
+}
+.cxm__view {
+  position: relative;
+  aspect-ratio: 0.94; /* торец 20-футового контейнера */
+}
+.cxm__cam {
+  position: absolute;
+  inset: 0;
+}
+
+/* рама торца */
+.cxm__frame {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  border-radius: 6px;
+  border: var(--f) solid #c94a2f;
+  box-shadow:
+    inset 0 0 0 2px #9d3820,
+    0 0 0 2px #9d3820;
+  pointer-events: none;
+}
+.cxm__frame i {
+  position: absolute;
+  inset: calc(var(--f) * -1);
+  border-radius: 6px;
+  background:
+    linear-gradient(#8c3019, #8c3019) 0 0 / 16px 12px no-repeat,
+    linear-gradient(#8c3019, #8c3019) 100% 0 / 16px 12px no-repeat,
+    linear-gradient(#8c3019, #8c3019) 0 100% / 16px 12px no-repeat,
+    linear-gradient(#8c3019, #8c3019) 100% 100% / 16px 12px no-repeat;
+}
+
+/* проём: внутренности обрезаются по нему */
+.cxm__inside {
+  position: absolute;
+  z-index: 0; /* свой слой: надписи коробок не всплывают над дверцами */
+  inset: var(--f);
+  overflow: hidden;
+  background: #1a0d08;
+}
+.cxm__art {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 58%;
+}
+.cxm__wall {
+  position: absolute;
+  inset: 0;
+}
+.cxm__wall--top {
+  clip-path: polygon(0 0, 100% 0, 70% 28%, 30% 28%);
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.15)),
+    repeating-linear-gradient(90deg, #33190f 0 8px, #241109 8px 16px);
+}
+.cxm__wall--bot {
+  clip-path: polygon(30% 72%, 70% 72%, 100% 100%, 0 100%);
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0)),
+    repeating-linear-gradient(90deg, #6b4a2f 0 22px, #5a3d26 22px 23px, #7a5435 23px 45px, #4f351f 45px 46px);
+}
+.cxm__wall--l {
+  clip-path: polygon(0 0, 30% 28%, 30% 72%, 0 100%);
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.55)),
+    repeating-linear-gradient(180deg, #4a2619 0 7px, #3a1d14 7px 10px, #2e170f 10px 16px);
+}
+.cxm__wall--r {
+  clip-path: polygon(100% 0, 100% 100%, 70% 72%, 70% 28%);
+  background:
+    linear-gradient(270deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.55)),
+    repeating-linear-gradient(180deg, #4a2619 0 7px, #3a1d14 7px 10px, #2e170f 10px 16px);
+}
+.cxm__wall--back {
+  inset: 28% 30%;
+  background: repeating-linear-gradient(90deg, #26130c 0 6px, #31190f 6px 8px, #1f0f09 8px 14px);
+}
+.cxm__lamp {
+  position: absolute;
+  left: 49%;
+  top: 2%;
+  width: 2%;
+  height: 22%;
+  border-radius: 4px;
+  background: #ffe9c8;
+  box-shadow: 0 0 18px 4px rgba(255, 210, 150, 0.55);
+}
+.cxm__glow {
+  position: absolute;
+  inset: 10% 15%;
+  background: radial-gradient(closest-side, rgba(255, 170, 110, 0.32), transparent);
+  opacity: 0;
+}
+
+/* коробки: передняя грань + светлая «крышка» сверху */
+.cxm__box {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  background: #c99863;
+  box-shadow: inset 0 -6px 10px rgba(0, 0, 0, 0.18);
+}
+.cxm__box::before {
+  content: "";
+  position: absolute;
+  left: 6%;
+  right: -6%;
+  top: -14%;
+  height: 14%;
+  background: #dcae7a;
+  transform: skewX(-30deg);
+  transform-origin: 0 100%;
+}
+.cxm__box::after {
+  content: "";
+  position: absolute;
+  left: 44%;
+  width: 12%;
+  top: 0;
+  bottom: 0;
+  background: rgba(255, 235, 200, 0.28);
+}
+.cxm__box.is-dark {
+  background: #2b2d33;
+}
+.cxm__box.is-dark::before {
+  background: #3a3d45;
+}
+.cxm__box.is-dark::after {
+  background: var(--accent);
+  opacity: 0.9;
+}
+.cxm__box.is-crate {
+  background:
+    repeating-linear-gradient(180deg, transparent 0 9px, rgba(0, 0, 0, 0.25) 9px 10px),
+    #9c7748;
+}
+.cxm__box.is-crate::before {
+  background: #b08a58;
+}
+.cxm__box.is-crate::after {
+  display: none;
+}
+.cxm__box b,
+.cxm__box em {
+  position: relative;
+  z-index: 1;
+  font-size: 7px;
+  font-weight: 800;
+  font-style: normal;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  white-space: nowrap;
+}
+.cxm__box b {
+  padding: 2px 3px;
+  background: #f4efe6;
+  color: #1a1a1a;
+}
+.cxm__box em {
+  padding: 2px 3px;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  transform: rotate(-8deg);
+  background: rgba(255, 255, 255, 0.45);
+}
+.cxm__box--1 { left: 31%; top: 56%; width: 16%; height: 16%; }
+.cxm__box--2 { left: 51%; top: 52%; width: 18%; height: 20%; }
+.cxm__box--3 { left: 37%; top: 63%; width: 27%; height: 22%; }
+.cxm__box--4 { left: 14%; top: 70%; width: 22%; height: 19%; }
+.cxm__box--5 { left: 64%; top: 69%; width: 24%; height: 20%; }
+
+/* дверцы: один уровень 3D (поворот вокруг края), без preserve-3d */
+.cxm__doors {
+  position: absolute;
+  z-index: 2;
+  inset: var(--f);
+  perspective: 700px;
+}
+.cxm__door {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.16), transparent 30%, rgba(0, 0, 0, 0.1)),
+    repeating-linear-gradient(180deg, #e4593a 0 13px, #f36442 13px 22px, #c94a2f 22px 24px);
+  box-shadow: inset 0 0 0 2px #a63a22;
+}
+.cxm__door--l {
+  left: 0;
+  transform-origin: 0 50%;
+  box-shadow:
+    inset -1px 0 0 2px #7b2a17,
+    inset 0 0 0 2px #a63a22;
+}
+.cxm__door--r {
+  right: 0;
+  transform-origin: 100% 50%;
+}
+.cxm__rod {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  width: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #b9b9b9, #ececec, #8a8a8a);
+}
+.cxm__rod:nth-child(1) {
+  left: 24%;
+}
+.cxm__rod:nth-child(2) {
+  left: 66%;
+}
+.cxm__handle {
+  position: absolute;
+  top: 55%;
+  width: 4px;
+  height: 34px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #9b9b9b, #e7e7e7);
+  transform-origin: 50% 0;
+}
+.cxm__handle:nth-of-type(3) {
+  left: calc(24% + 5px);
+}
+.cxm__handle:nth-of-type(4) {
+  left: calc(66% + 5px);
+}
+.cxm__door-print {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.cxm__door-print b {
+  position: absolute;
+  top: 16%;
+  font-family: var(--f-display);
+  font-weight: 900;
+  font-size: clamp(22px, 7vw, 30px);
+  letter-spacing: -0.05em;
+  color: #fff;
+  line-height: 1;
+}
+.cxm__door--l .cxm__door-print b {
+  right: 7px;
+}
+.cxm__door--r .cxm__door-print b {
+  left: 7px;
+}
+.cxm__door-print small {
+  position: absolute;
+  bottom: 9px;
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1.3;
+  color: rgba(255, 255, 255, 0.85);
+}
+.cxm__door--l .cxm__door-print small {
+  left: 7px;
+}
+.cxm__door--r .cxm__door-print small {
+  right: 7px;
+  text-align: right;
+}
+/* изнанка створки — темнеет при открытии */
+.cxm__door-shade {
+  position: absolute;
+  inset: 0;
+  background: #6a2614;
+  opacity: 0;
+}
+
+/* метки в открытом контейнере — 2×2, обычный размер текста */
+.cxm__tags {
+  position: absolute;
+  inset: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-content: space-between;
+  gap: 8px;
+  pointer-events: none;
+}
+.cxm__tag {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 8px;
+  align-items: center;
+  padding: 9px 10px 9px 8px;
+  border-radius: 14px;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #fff;
+  font-size: 14px;
+  line-height: 1.2;
+  text-align: left;
+}
+.cxm__tag i {
+  grid-row: span 2;
+  position: relative;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.cxm__tag i::after {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.cxm__tag span {
+  font-size: 12px;
+  color: #a6b0c3;
+}
+
+.cxm__hit {
+  position: absolute;
+  inset: 0;
+}
+.cxm__hint,
+.cxm__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50px;
+  margin: 26px auto 0;
+  padding: 0 26px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+}
+.cxm__hint {
+  background: rgba(15, 23, 42, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  color: #fff;
+}
+.cxm__close {
+  background: #fff;
+  color: var(--navy);
+}
+.cxm:not(.is-open) .cxm__close,
+.cxm.is-open .cxm__hint {
+  display: none;
+}

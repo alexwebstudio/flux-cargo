@@ -5,6 +5,7 @@ import "@fontsource-variable/manrope";
 import "./globals.css";
 import "@/styles/hero.css";
 import "@/styles/container.css";
+import "@/styles/container-mobile.css";
 import "@/styles/sections.css";
 import "@/styles/pages.css";
 import "@/styles/track.css";

@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { gsap, useGSAP, prefersReducedMotion, onSiteReady } from "@/lib/gsap";
 import { img, PHOTOS } from "@/lib/data";
 import ContainerScene from "./ContainerScene";
+import ContainerMobile from "./ContainerMobile";
 import { Arrow } from "./ui";
 
 const BRAND = "flux cargo";
@@ -118,7 +119,9 @@ export default function Hero() {
         </div>
 
         <div className="hero__scene" data-hero>
+          {/* десктоп — 3D-контейнер, телефон — облегчённый 2D (CSS переключает) */}
           <ContainerScene />
+          <ContainerMobile />
         </div>
       </div>
 

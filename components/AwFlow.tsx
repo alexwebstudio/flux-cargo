@@ -87,17 +87,26 @@ export default function AwFlow() {
          Параметры как в конструкторе AW-Flow: наклон по X 35°, перспектива 1200px,
          смещение 60px, 1000мс, ease cubic-bezier(.33,1,.68,1) ≈ power2.out,
          ось вращения — нижний край, прозрачность за 0.6 длительности линейно. */
-      const TILT = { angle: 35, perspective: 1200, distance: 60, duration: 1, stagger: 0.1 };
+      // на телефоне — облегчённо: без 3D-наклона и перспективы, короче и мягче
+      const phone = isTouch() || window.innerWidth <= 760;
+      const TILT = phone
+        ? { angle: 0, perspective: 0, distance: 28, duration: 0.6, stagger: 0.06 }
+        : { angle: 35, perspective: 1200, distance: 60, duration: 1, stagger: 0.1 };
       q("[data-fx=stagger]").forEach((grid) => {
         const items = Array.from(grid.children) as HTMLElement[];
         gsap.set(grid, { autoAlpha: 1 });
-        gsap.set(items, {
-          autoAlpha: 0,
-          y: TILT.distance,
-          rotationX: TILT.angle,
-          transformPerspective: TILT.perspective,
-          transformOrigin: "50% 100%",
-        });
+        gsap.set(
+          items,
+          phone
+            ? { autoAlpha: 0, y: TILT.distance }
+            : {
+                autoAlpha: 0,
+                y: TILT.distance,
+                rotationX: TILT.angle,
+                transformPerspective: TILT.perspective,
+                transformOrigin: "50% 100%",
+              },
+        );
         ScrollTrigger.batch(items, {
           start: "top 92%",
           once: true,
@@ -110,7 +119,7 @@ export default function AwFlow() {
             });
             gsap.to(batch, {
               y: 0,
-              rotationX: 0,
+              ...(phone ? {} : { rotationX: 0 }),
               duration: TILT.duration,
               ease: "power2.out",
               stagger: TILT.stagger,

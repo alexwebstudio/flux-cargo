@@ -692,6 +692,10 @@ mark.is-on {
   background: var(--surface-2);
   transform: rotate(90deg);
 }
-html.modal-open {
+/* блокировка прокрутки под поп-апом и меню (на телефоне скролл нативный) */
+html.modal-open,
+html.modal-open body,
+html.menu-open,
+html.menu-open body {
   overflow: hidden;
 }
