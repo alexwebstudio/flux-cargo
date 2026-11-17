@@ -161,8 +161,8 @@ export default function AwFlow() {
         });
       });
 
-      /* Parallax */
-      q("[data-fx=parallax]").forEach((el) => {
+      /* Parallax — только на десктопе */
+      if (!isTouch() && window.innerWidth > 760) q("[data-fx=parallax]").forEach((el) => {
         const speed = Number(el.dataset.speed ?? 12);
         gsap.fromTo(
           el,

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { FAQ, CONTACTS } from "@/lib/data";
+import { FAQ } from "@/lib/data";
 import { SectionHead } from "./ui";
 
 export default function Faq() {
@@ -14,13 +14,9 @@ export default function Faq() {
             Частые <em>вопросы</em>
           </SectionHead>
           <p className="faq__ask" data-fx="fade-up">
-            Не нашли ответ? Позвоните{" "}
-            <a href={CONTACTS.phoneHref} className="ulink">
-              {CONTACTS.phone}
-            </a>{" "}
-            или напишите на{" "}
-            <a href={`mailto:${CONTACTS.email}`} className="ulink">
-              {CONTACTS.email}
+            Не нашли ответ —{" "}
+            <a href="#contacts" className="ulink">
+              свяжитесь с нами
             </a>
           </p>
         </div>

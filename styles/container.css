@@ -52,8 +52,8 @@
   height: 70px;
   margin-left: -280px;
   border-radius: 50%;
-  background: radial-gradient(closest-side, rgba(0, 0, 0, 0.75), transparent);
-  filter: blur(6px);
+  /* мягкая тень градиентом, без filter: blur — дорого для телефонов */
+  background: radial-gradient(closest-side, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.22) 55%, transparent);
 }
 
 .cx-face,
@@ -538,5 +538,84 @@
   .cx-tag {
     font-size: 13px;
     padding: 8px 12px 8px 8px;
+  }
+}
+
+/* ============ Надёжность и скорость (особенно на телефонах) ============ */
+/* Сцена масштабируется через zoom: рисуется сразу в нужном размере,
+   без растрового масштабирования — чётче и без волосяных щелей между гранями. */
+@supports (zoom: 1) {
+  .cx-scaler {
+    transform: none;
+    zoom: var(--k);
+  }
+}
+.cx-float,
+.cx-cam {
+  will-change: transform;
+}
+/* Грани чуть больше и заходят друг на друга на 3px — никаких просветов на стыках */
+.cx {
+  --o: 3px;
+}
+.cx-side,
+.cx-in--r,
+.cx-in--l {
+  width: calc(var(--L) + 2 * var(--o));
+  height: calc(var(--H) + 2 * var(--o));
+  left: calc(var(--L) / -2 - var(--o));
+  top: calc(var(--H) / -2 - var(--o));
+}
+.cx-roof,
+.cx-floor-out,
+.cx-in--top,
+.cx-in--floor {
+  width: calc(var(--W) + 2 * var(--o));
+  height: calc(var(--L) + 2 * var(--o));
+  left: calc(var(--W) / -2 - var(--o));
+  top: calc(var(--L) / -2 - var(--o));
+}
+.cx-back,
+.cx-in--back {
+  width: calc(var(--W) + 2 * var(--o));
+  height: calc(var(--H) + 2 * var(--o));
+  left: calc(var(--W) / -2 - var(--o));
+  top: calc(var(--H) / -2 - var(--o));
+}
+/* HUD вынесен из масштабируемой сцены — лежит поверх неё в реальном размере */
+.cx > .cx-inside {
+  z-index: 3;
+}
+@media (max-width: 760px) {
+  .cube--opt {
+    display: none;
+  }
+  /* метки в открытом контейнере — сеткой 2×2 (две сверху, две снизу), без наложений */
+  .cx > .cx-inside {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-content: space-between;
+    gap: 8px;
+    padding: 8px;
+  }
+  /* «Закрыть контейнер» — под сценой, чтобы не прятаться под метками */
+  .cx.is-open {
+    margin-bottom: 64px;
+  }
+  .cx-close {
+    bottom: auto;
+    top: calc(100% + 10px);
+  }
+  .cx > .cx-inside .cx-tag {
+    position: static !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    min-width: 0;
+  }
+  .cx-tag {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(15, 23, 42, 0.9);
   }
 }

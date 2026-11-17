@@ -36,10 +36,9 @@ export default function Calculator() {
 /** Сама форма — та же и на странице, и в поп-апе «Рассчитать». */
 export function CalcForm({ inModal = false }: { inModal?: boolean }) {
   // общее состояние: главная и поп-ап показывают одни и те же данные
-  const { from, to, goods, mode, kg, name, phone, sent } = useCalc();
+  const { from, to, goods, goodsText, mode, kg, name, phone, sent } = useCalc();
   const setFrom = (v: string) => setCalc({ from: v });
   const setTo = (v: string) => setCalc({ to: v });
-  const setGoods = (v: string) => setCalc({ goods: v });
   const setMode = (v: TariffMode) => setCalc({ mode: v });
   const setKg = (v: number) => setCalc({ kg: v });
   const setName = (v: string) => setCalc({ name: v });
@@ -122,11 +121,26 @@ export function CalcForm({ inModal = false }: { inModal?: boolean }) {
             <div className="chips">
               {GOODS.map((g) => (
                 <label key={g.id} className={`chip ${goods === g.id ? "is-on" : ""}`}>
-                  <input type="radio" name={`goods-${uid}`} value={g.id} checked={goods === g.id} onChange={() => setGoods(g.id)} />
+                  <input
+                    type="radio"
+                    name={`goods-${uid}`}
+                    value={g.id}
+                    checked={goods === g.id}
+                    onChange={() => setCalc({ goods: g.id })}
+                  />
                   {g.label}
                 </label>
               ))}
             </div>
+            {goods === "other" && (
+              <input
+                className="calc__goods"
+                value={goodsText}
+                onChange={(e) => setCalc({ goodsText: e.target.value })}
+                placeholder="Что за товар? Например: чехлы для телефонов"
+                aria-label="Опишите товар"
+              />
+            )}
           </fieldset>
 
           <fieldset className="field">

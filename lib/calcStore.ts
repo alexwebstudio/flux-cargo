@@ -12,6 +12,8 @@ export type CalcState = {
   from: string;
   to: string;
   goods: string;
+  /** если выбран тип «Другое» — что за товар, клиент пишет сам */
+  goodsText: string;
   mode: TariffMode;
   kg: number;
   name: string;
@@ -23,6 +25,7 @@ const initial: CalcState = {
   from: FROM_CITIES[0],
   to: TO_CITIES[0],
   goods: GOODS[1].id,
+  goodsText: "",
   mode: "auto",
   kg: 25,
   name: "",

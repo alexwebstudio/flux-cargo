@@ -45,10 +45,14 @@ export default function Hero() {
           .to("[data-hero]", { autoAlpha: 1, y: 0, duration: 0.9, stagger: 0.08, ease: "power3.out" }, 0.6);
       });
 
-      gsap.to(".hero__photo img", {
-        yPercent: 8,
-        ease: "none",
-        scrollTrigger: { trigger: root.current, start: "top top", end: "bottom top", scrub: true },
+      // параллакс фото — только на десктопе: на телефоне scrub на каждый кадр скролла даёт рывки
+      const mm = gsap.matchMedia();
+      mm.add("(hover: hover) and (min-width: 761px)", () => {
+        gsap.to(".hero__photo img", {
+          yPercent: 8,
+          ease: "none",
+          scrollTrigger: { trigger: root.current, start: "top top", end: "bottom top", scrub: true },
+        });
       });
       return off;
     },
@@ -60,7 +64,13 @@ export default function Hero() {
       {/* фото корабля — на весь герой, в том числе под заголовком */}
       <div className="hero__photo" aria-hidden>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={img(PHOTOS.heroPort, 2400)} alt="" fetchPriority="high" />
+        <img
+          src={img(PHOTOS.heroPort, 2400)}
+          srcSet={[800, 1200, 1800, 2400].map((w) => `${img(PHOTOS.heroPort, w)} ${w}w`).join(", ")}
+          sizes="100vw"
+          alt=""
+          fetchPriority="high"
+        />
       </div>
 
       <div className="hero__meta wrap" data-hero>

@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { NAV } from "@/lib/data";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { NAV, CONTACTS } from "@/lib/data";
 import { Arrow } from "./ui";
 
 /**
@@ -12,6 +14,7 @@ import { Arrow } from "./ui";
 export default function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -29,9 +32,22 @@ export default function Header() {
   return (
     <header className={`hdr ${scrolled && !open ? "is-scrolled" : "t-dark"}`}>
       <div className="hdr__in">
-        <a href="#top" className="hdr__logo" aria-label="Flux Cargo — на главную">
+        {/* логотип — ссылка на главную; на самой главной плавно поднимает наверх */}
+        <Link
+          href="/"
+          className="hdr__logo"
+          aria-label="Flux Cargo — на главную"
+          onClick={(e) => {
+            setOpen(false);
+            if (pathname === "/") {
+              e.preventDefault();
+              if (window.__lenis) window.__lenis.scrollTo(0, { duration: 1.2 });
+              else window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+          }}
+        >
           FLUX<span>CARGO</span>
-        </a>
+        </Link>
         <span className="hdr__sep" aria-hidden />
 
         <nav className="hdr__nav" aria-label="Основное меню">
@@ -70,10 +86,19 @@ export default function Header() {
             </a>
           ))}
         </nav>
-        <a href="#calc" data-open-calc className="btn btn--accent btn--lg">
-          <span>Рассчитать</span>
-          <Arrow />
-        </a>
+        <div className="mnav__foot">
+          <a href="#calc" data-open-calc className="btn btn--accent btn--lg">
+            <span>Рассчитать</span>
+            <Arrow />
+          </a>
+          <address className="mnav__contacts">
+            <a href={CONTACTS.phoneHref} className="mnav__phone">
+              {CONTACTS.phone}
+            </a>
+            <span>{CONTACTS.address}</span>
+            <a href={`mailto:${CONTACTS.email}`}>{CONTACTS.email}</a>
+          </address>
+        </div>
       </div>
     </header>
   );

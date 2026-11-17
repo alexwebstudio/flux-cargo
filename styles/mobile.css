@@ -61,9 +61,6 @@
   .mnav nav {
     align-items: center;
   }
-  .mnav .btn {
-    align-self: stretch;
-  }
 
   /* ---------- Hero ---------- */
   .hero {
@@ -72,6 +69,7 @@
   }
   .hero__meta {
     justify-content: center;
+    padding-bottom: 58px; /* было 8px: +50px под строкой «Карго из Китая в Казахстан» */
   }
   .hero__photo::after {
     background: linear-gradient(180deg, rgba(15, 23, 42, 0.6) 0%, rgba(15, 23, 42, 0.45) 45%, rgba(15, 23, 42, 0.92) 100%);
@@ -138,22 +136,13 @@
     display: none;
   }
   .cx-tag {
-    font-size: 12px;
-    padding: 7px 10px 7px 7px;
-    border-radius: 12px;
+    font-size: 15px;
+    padding: 9px 12px 9px 9px;
+    border-radius: 14px;
+    column-gap: 8px;
   }
   .cx-tag span {
-    font-size: 11px;
-  }
-  .cx-tag i {
-    width: 22px;
-    height: 22px;
-  }
-  .cx-tag i::after {
-    left: 8px;
-    top: 5px;
-    width: 5px;
-    height: 10px;
+    font-size: 12.5px;
   }
 
   /* ---------- метрики ---------- */
@@ -283,7 +272,8 @@
     align-items: center;
     gap: 2px;
   }
-  .calc__form input {
+  .calc__form input,
+  .calc__goods {
     text-align: center;
   }
 
@@ -368,11 +358,16 @@
     margin-inline: auto;
   }
   .faq__q {
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 18px 1fr 18px; /* пустая колонка слева уравновешивает плюсик — текст строго по центру */
+    align-items: center;
     gap: 12px;
     text-align: center;
     font-size: 19px;
     padding: 22px 0;
+  }
+  .faq__q::before {
+    content: "";
   }
   .faq__a p {
     margin-inline: auto;
@@ -497,9 +492,6 @@
   .catpage__hero {
     padding-bottom: 48px;
   }
-  .catpage__bg::after {
-    background: linear-gradient(180deg, rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.92));
-  }
   .crumbs {
     justify-content: center;
   }
@@ -551,6 +543,37 @@
   .fcard__hero {
     font-size: 15vw;
     padding: 14px;
+  }
+
+  /* ---------- плавность: дорогие эффекты на телефоне выключаем ---------- */
+  .hero__verbs li,
+  .hero__ctas .btn--ghost,
+  .modal__overlay,
+  .bx-hint,
+  .cx-hint,
+  .princ__item {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .hero__verbs li {
+    background: rgba(15, 23, 42, 0.55);
+  }
+  .hero__ctas .btn--ghost {
+    background: rgba(255, 255, 255, 0.08);
+  }
+  .cx-hint {
+    background: rgba(15, 23, 42, 0.78);
+  }
+  .hdr.is-scrolled .hdr__in {
+    backdrop-filter: blur(10px) saturate(1.4);
+    -webkit-backdrop-filter: blur(10px) saturate(1.4);
+    background: rgba(255, 255, 255, 0.82);
+  }
+  .blobs i {
+    animation: none;
+  }
+  .hero__char {
+    will-change: auto;
   }
 }
 

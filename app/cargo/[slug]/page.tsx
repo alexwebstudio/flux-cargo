@@ -32,10 +32,6 @@ export default async function CategoryPage({ params }: Props) {
   return (
     <main className="catpage">
       <section className="catpage__hero navy">
-        <div className="catpage__bg" aria-hidden>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={img(c.photo, 2000)} alt="" />
-        </div>
         <div className="wrap catpage__hero-in">
           <nav className="crumbs" aria-label="Хлебные крошки">
             <Link href="/">Главная</Link>
@@ -47,7 +43,7 @@ export default async function CategoryPage({ params }: Props) {
           <span className="catpage__idx" data-fx="fade-up">
             Категория 0{i + 1}
           </span>
-          <h1 className="catpage__title" data-fx="mask">
+          <h1 className="catpage__title" data-fx="fade-up">
             {c.title} <em>из Китая</em>
           </h1>
           <p className="catpage__lead" data-fx="fade-up">

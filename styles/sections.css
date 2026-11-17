@@ -542,6 +542,25 @@ section {
   background-repeat: no-repeat;
   background-position: right 18px center;
 }
+/* поле «что за товар» под пунктом «Другое» */
+.calc__goods {
+  margin-top: 4px;
+  height: 54px;
+  width: 100%;
+  padding: 0 18px;
+  border-radius: 14px;
+  border: 1px solid var(--line-2);
+  background: var(--bg);
+  outline: none;
+  animation: goods-in 0.4s var(--ease);
+}
+@keyframes goods-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+.calc__goods:focus,
 .field select:focus,
 .calc__form input:focus {
   border-color: var(--accent);

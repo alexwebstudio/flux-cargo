@@ -8,6 +8,9 @@ import { useGSAP } from "@gsap/react";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger, SplitText, ScrambleTextPlugin, useGSAP);
+  // на телефоне адресная строка прячется/появляется при скролле — без этого
+  // ScrollTrigger пересчитывал бы все триггеры на каждое такое изменение (рывки)
+  ScrollTrigger.config({ ignoreMobileResize: true });
 }
 
 export const isTouch = () =>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
-import { gsap, useGSAP, prefersReducedMotion, onSiteReady } from "@/lib/gsap";
+import { gsap, ScrollTrigger, useGSAP, prefersReducedMotion, onSiteReady } from "@/lib/gsap";
 
 /**
  * Контейнер-фишка (вариант A из концепта, усиленный):
@@ -52,7 +52,7 @@ const TAGS = [
 
 const px = (n: number) => `${n}px`;
 
-function CubeEl({ c }: { c: Cube }) {
+function CubeEl({ c, light = false }: { c: Cube; light?: boolean }) {
   const y = H / 2 - (c.base ?? 0) - c.h / 2;
   const style = {
     transform: `translate3d(${px(c.x)}, ${px(y)}, ${px(c.z)})`,
@@ -61,7 +61,7 @@ function CubeEl({ c }: { c: Cube }) {
     "--d": px(c.d),
   } as CSSProperties;
   return (
-    <div className={`cube cube--${c.kind ?? "box"}`} style={style}>
+    <div className={`cube cube--${c.kind ?? "box"} ${light ? "cube--opt" : ""}`} style={style}>
       <div className="cube__f cube__front">
         {c.kind !== "crate" && <i className="cube__tape" />}
         {c.label && <span className="cube__label">{c.label}</span>}
@@ -113,6 +113,7 @@ export default function ContainerScene() {
   const tl = useRef<gsap.core.Timeline | null>(null);
   const idle = useRef<gsap.core.Timeline | null>(null);
   const [open, setOpen] = useState(false);
+  const openRef = useRef(false);
   const [busy, setBusy] = useState(false);
 
   // масштаб сцены под ширину колонки
@@ -144,9 +145,19 @@ export default function ContainerScene() {
 
       if (!reduced) {
         idle.current = gsap
-          .timeline({ repeat: -1, yoyo: true, defaults: { ease: "sine.inOut", duration: 2.6 } })
+          .timeline({ paused: true, repeat: -1, yoyo: true, defaults: { ease: "sine.inOut", duration: 2.6 } })
           .to(q(".cx-float"), { y: -12 })
           .to(q(".cx-shadow"), { scale: 0.9, opacity: 0.55 }, 0);
+        // вне экрана не анимируем — экономим кадры при скролле (особенно на телефонах)
+        ScrollTrigger.create({
+          trigger: wrap.current,
+          start: "top bottom",
+          end: "bottom top",
+          onToggle: (st) => {
+            if (st.isActive && !openRef.current) idle.current?.play();
+            else idle.current?.pause();
+          },
+        });
       }
 
       const d = reduced ? 0.01 : 1;
@@ -197,6 +208,7 @@ export default function ContainerScene() {
     } else {
       t.timeScale(1.6).reverse();
     }
+    openRef.current = !open;
     setOpen(!open);
   };
 
@@ -236,7 +248,7 @@ export default function ContainerScene() {
                 </div>
 
                 {CUBES.map((c, i) => (
-                  <CubeEl key={i} c={c} />
+                  <CubeEl key={i} c={c} light={[2, 6, 8].includes(i)} />
                 ))}
 
                 {/* Торец с дверцами */}
@@ -254,17 +266,18 @@ export default function ContainerScene() {
             </div>
           </div>
 
-          {/* HUD внутри контейнера */}
-          <div className="cx-inside" aria-hidden={!open}>
-            {TAGS.map((t) => (
-              <div key={t.t} className="cx-tag" style={{ left: `${t.x}%`, top: `${t.y}%` }}>
-                <i />
-                <b>{t.t}</b>
-                <span>{t.s}</span>
-              </div>
-            ))}
-          </div>
         </div>
+      </div>
+
+      {/* HUD поверх сцены — не масштабируется, текст читается и на телефоне */}
+      <div className="cx-inside" aria-hidden={!open}>
+        {TAGS.map((t) => (
+          <div key={t.t} className="cx-tag" style={t.x < 50 ? { left: `${t.x}%`, top: `${t.y}%` } : { right: `${Math.max(2, 96 - t.x - 30)}%`, top: `${t.y}%` }}>
+            <i />
+            <b>{t.t}</b>
+            <span>{t.s}</span>
+          </div>
+        ))}
       </div>
 
       {/* Кликабельная зона — дверцы (в закрытом состоянии) */}
