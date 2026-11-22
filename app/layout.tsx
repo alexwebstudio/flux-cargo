@@ -31,6 +31,14 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="ru" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+        {/* Safari (Mac) и все браузеры на iPhone/iPad — движок WebKit: 3D-контейнер в нём
+            рисуется с ошибками, поэтому там показываем надёжный 2D-вариант */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){var u=navigator.userAgent,ios=/iPhone|iPad|iPod/.test(u)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1),safari=/AppleWebKit/.test(u)&&!/Chrome|Chromium|CriOS|Edg|OPR|Android|FxiOS/.test(u);if(ios||safari)document.documentElement.classList.add('is-webkit')})()",
+          }}
+        />
         {process.env.NODE_ENV === "development" && (
           // dev: ?noraf — rAF на таймерах для превью-окон, где requestAnimationFrame не тикает
           <script

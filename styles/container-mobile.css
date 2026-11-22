@@ -321,7 +321,7 @@
   align-items: center;
   padding: 9px 10px 9px 8px;
   border-radius: 14px;
-  background: rgba(15, 23, 42, 0.9);
+  background: #121b30; /* непрозрачно — надписи коробок не просвечивают */
   border: 1px solid rgba(255, 255, 255, 0.18);
   color: #fff;
   font-size: 14px;
@@ -382,4 +382,47 @@
 .cxm:not(.is-open) .cxm__close,
 .cxm.is-open .cxm__hint {
   display: none;
+}
+
+/* ============ Safari / устройства Apple: 2D-контейнер на любой ширине ============ */
+.is-webkit .cx {
+  display: none !important;
+}
+.is-webkit .cxm {
+  display: block;
+  --f: 13px;
+}
+@media (min-width: 761px) {
+  .is-webkit .cxm {
+    --f: 18px;
+  }
+  .is-webkit .cxm__body {
+    width: min(58%, 360px);
+    margin-top: 0;
+  }
+  .is-webkit .cxm__door-print b {
+    font-size: 32px;
+    top: 15%;
+  }
+  .is-webkit .cxm__door-print small {
+    font-size: 9px;
+  }
+  .is-webkit .cxm__rod {
+    width: 5px;
+  }
+  .is-webkit .cxm__handle {
+    width: 5px;
+    height: 46px;
+  }
+  .is-webkit .cxm__box b,
+  .is-webkit .cxm__box em {
+    font-size: 9px;
+  }
+  .is-webkit .cxm__tag {
+    font-size: 15px;
+    padding: 11px 14px 11px 10px;
+  }
+  .is-webkit .cxm__tag span {
+    font-size: 13px;
+  }
 }

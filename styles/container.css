@@ -17,7 +17,10 @@
   inset: 0;
   perspective: 1000px;
   perspective-origin: 50% 46%;
-  border-radius: 28px;
+  /* без overflow/border-radius: в WebKit (Safari) обрезка со скруглением
+     «сплющивает» 3D-сцену — грани пропадают. Обрезаем уровнем выше. */
+}
+.cx-scaler {
   overflow: hidden;
 }
 .cx-float,
@@ -503,7 +506,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 0; /* подсказка — одна фраза, без зазора перед «— посмотрите, что внутри» */
   min-height: 52px;
   padding: 0 28px;
   border-radius: 999px;
@@ -544,12 +547,6 @@
 /* ============ Надёжность и скорость (особенно на телефонах) ============ */
 /* Сцена масштабируется через zoom: рисуется сразу в нужном размере,
    без растрового масштабирования — чётче и без волосяных щелей между гранями. */
-@supports (zoom: 1) {
-  .cx-scaler {
-    transform: none;
-    zoom: var(--k);
-  }
-}
 .cx-float,
 .cx-cam {
   will-change: transform;
